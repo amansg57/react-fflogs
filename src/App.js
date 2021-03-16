@@ -1,7 +1,17 @@
-import './App.css';
+import './App.scss';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Dropdown, Button, Navbar, Hero, Footer, Container, Content } from 'react-bulma-components';
-import {XYPlot, LineMarkSeries} from 'react-vis';
+import Button from 'react-bulma-components/lib/components/button';
+import Dropdown from 'react-bulma-components/lib/components/dropdown';
+import Navbar from 'react-bulma-components/lib/components/navbar';
+import Hero from 'react-bulma-components/lib/components/hero';
+import Footer from 'react-bulma-components/lib/components/footer';
+import Container from 'react-bulma-components/lib/components/container';
+import Content from 'react-bulma-components/lib/components/content';
+import Section from 'react-bulma-components/lib/components/section';
+import Level from 'react-bulma-components/lib/components/level';
+import Box from 'react-bulma-components/lib/components/box';
+import Heading from 'react-bulma-components/lib/components/heading';
+import {FlexibleWidthXYPlot, LineMarkSeries, XAxis, YAxis} from 'react-vis';
 import '../node_modules/react-vis/dist/style.css';
 
 function App() {
@@ -15,6 +25,18 @@ function App() {
     {x: 6, y: 6},
     {x: 7, y: 3},
     {x: 8, y: 2},
+    {x: 9, y: 0}
+  ];
+  const data2 = [
+    {x: 0, y: 5},
+    {x: 1, y: 3},
+    {x: 2, y: 6},
+    {x: 3, y: 1},
+    {x: 4, y: 9},
+    {x: 5, y: 6},
+    {x: 6, y: 7},
+    {x: 7, y: 2},
+    {x: 8, y: 3},
     {x: 9, y: 0}
   ];
   return (
@@ -38,27 +60,55 @@ function App() {
         </Navbar.Menu>
       </Navbar>
 
-      <Hero size="medium">
-        <Hero.Body>
+      <body>
 
-        <XYPlot height={450} width={1200}>
+      <Section>
+        <Container fluid>
+
+        <FlexibleWidthXYPlot height="400">
           <LineMarkSeries data={data} />
-        </XYPlot>
+          <LineMarkSeries
+            lineStyle={{stroke: 'red'}}
+            markStyle={{stroke: 'blue'}} 
+            data={data2} />
+          <XAxis />
+          <YAxis />
+        </FlexibleWidthXYPlot>
 
-        </Hero.Body>
-      </Hero>
+        </Container>
+      </Section>
+      
+      <Section>
+        <Box>
+          <Level>
+            <Level.Item>
+              <div>
+                <Heading renderAs="p" heading style={{ textAlign: 'center' }}>
+                  Dropdown
+                </Heading>
+                <Dropdown color="primary">
+                  <Dropdown.Item value="item">
+                    Dropdown item
+                  </Dropdown.Item>
+                </Dropdown>
+              </div>
+            </Level.Item>
 
-        <Dropdown>
-          <Dropdown.Item value="item">
-            Dropdown item
-          </Dropdown.Item>
-        </Dropdown>
+            <Level.Item>
+              <div>
+                <Heading renderAs="p" heading style={{ textAlign: 'center' }}>
+                  Button
+                </Heading>
+                <Button color='primary'>
+                  Button
+                </Button>
+              </div>
+            </Level.Item>
+          </Level>
+        </Box>
+      </Section>
 
-        <Button color='danger'>
-          Button
-        </Button>
-
-        
+      </body>
 
       <Hero.Footer>
         <Footer>
