@@ -11,34 +11,24 @@ import Section from 'react-bulma-components/lib/components/section';
 import Level from 'react-bulma-components/lib/components/level';
 import Box from 'react-bulma-components/lib/components/box';
 import Heading from 'react-bulma-components/lib/components/heading';
-import {FlexibleWidthXYPlot, LineMarkSeries, XAxis, YAxis} from 'react-vis';
+import {FlexibleWidthXYPlot, LineMarkSeries, XAxis, YAxis, DiscreteColorLegend} from 'react-vis';
 import '../node_modules/react-vis/dist/style.css';
+const json = require('./data.json');
 
 function App() {
-  const data = [
-    {x: 0, y: 8},
-    {x: 1, y: 5},
-    {x: 2, y: 4},
-    {x: 3, y: 9},
-    {x: 4, y: 1},
-    {x: 5, y: 7},
-    {x: 6, y: 6},
-    {x: 7, y: 3},
-    {x: 8, y: 2},
-    {x: 9, y: 0}
-  ];
-  const data2 = [
-    {x: 0, y: 5},
-    {x: 1, y: 3},
-    {x: 2, y: 6},
-    {x: 3, y: 1},
-    {x: 4, y: 9},
-    {x: 5, y: 6},
-    {x: 6, y: 7},
-    {x: 7, y: 2},
-    {x: 8, y: 3},
-    {x: 9, y: 0}
-  ];
+  const lineData = [
+    {title: 'Dragoon', color: 'blue', strokeStyle: 'solid'},
+    {title: 'Ninja', color: 'red', strokeStyle: 'solid'}
+  ]
+
+  var lineMarks = [];
+  for (var i = 0; i < lineData.length; i++) {
+    lineMarks.push(<LineMarkSeries 
+                    strokeStyle={lineData[i].strokeStyle}
+                    color={lineData[i].color}
+                    data={json.data[i]} />)
+  }
+
   return (
     <div className="App">
 
@@ -63,14 +53,18 @@ function App() {
       <body>
 
       <Section>
+        <Box>
+          <Level>
+            <DiscreteColorLegend orientation='horizontal' items={lineData}/>
+          </Level>
+        </Box>
+      </Section>
+
+      <Section>
         <Container fluid>
 
         <FlexibleWidthXYPlot height="400">
-          <LineMarkSeries data={data} />
-          <LineMarkSeries
-            lineStyle={{stroke: 'red'}}
-            markStyle={{stroke: 'blue'}} 
-            data={data2} />
+          {lineMarks}
           <XAxis />
           <YAxis />
         </FlexibleWidthXYPlot>
@@ -86,7 +80,7 @@ function App() {
                 <Heading renderAs="p" heading style={{ textAlign: 'center' }}>
                   Dropdown
                 </Heading>
-                <Dropdown color="primary">
+                <Dropdown color="primary" up="true">
                   <Dropdown.Item value="item">
                     Dropdown item
                   </Dropdown.Item>
